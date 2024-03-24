@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .robot{
+            height:80vh;
+            width:80vh;
+            padding-left: 450px;
+            display:flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .footer{
+            display: flex;
+            justify-content:space-between;
+            padding:40px 100px;
+           
+           
+        }
+        .footer button{
+           
+            font-size:1.2rem;
+            padding: 0px 20px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #4204ed;
+            color:white;
+        }
+        .footer button:hover{
+            transform: scale(1.2);
+        }
+        .Title {
+    /* Apply gradient as background */
+    background-image: linear-gradient(to right, #b0f721, #00ff00, #0000ff);
+    /* Clip the background to text */
+    -webkit-background-clip: text;
+    background-clip: text;
+    /* Set text color to transparent to see the gradient background */
+    color: transparent;
+}
+
+    </style>
+</head>
+<body style="background-color: #131324;">
+    <div class="footer">
+        <button id="register" >Register</button>
+        <h3><span class="Title" style=" font-size:3.5rem;">OTP-Validation-Platform</span></h3>
+        <button id="login">Login</button>
+    </div>
+    <img src="./Images/robot.gif" alt="robot move" class="robot">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/typed.js"></script> -->
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+   <script>
+document.getElementById("register").addEventListener("click", function() {
+    // Change window location to the desired HTML page
+    window.location.href = "register.html";
+});
+document.getElementById("login").addEventListener("click", function() {
+    // Change window location to the desired HTML page
+    window.location.href = "Login.html";
+});
+var typed = new Typed('.Title', {
+    strings: ['OTP-Validation-Platform','Email Verification','PhoneNumber Verification'],
+    typeSpeed: 200,
+    backspeed:400,
+    loop:true
+  });
+
+   </script> 
+</body>
+</html>

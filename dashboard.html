@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./secure-password.png" type="image/png">
+
+
+    <title>OTP Validation</title>
+    <!-- Add any necessary CSS styles here -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+             background-color: #131324;
+             color:white;
+        }
+    form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background-color: #00000076;
+    border-radius: 2rem;
+    padding: 5rem;
+    padding-bottom:150px
+    }
+        input {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .Title {
+    /* Apply gradient as background */
+    background-image: linear-gradient(to right, #f3047c, #00ff00, #0000ff);
+    /* Clip the background to text */
+    -webkit-background-clip: text;
+    background-clip: text;
+    /* Set text color to transparent to see the gradient background */
+    color: transparent;
+    margin-top: -95px;
+}
+
+.head {
+    /* Apply gradient as background */
+    background-image: linear-gradient(to right, #0dff01, #e4fd06, #cacafd);
+    /* Clip the background to text */
+    -webkit-background-clip: text;
+    background-clip: text;
+    /* Set text color to transparent to see the gradient background */
+    color: transparent;
+}
+
+    </style>
+</head>
+<body>
+    
+<form>
+    <img src="./Images/logo.svg" alt="" style=" 
+    width: 60px;
+height: 53px;
+top: 70px;
+left: 175px;
+gap: 0px;
+opacity: 0px;">
+<h1 class="Title">OTP Validation</h1>
+
+<!-- Phone Number input -->
+<div>
+    <label for="phone" class="head">Phone No :</label>
+    <input type="text" id="phone" placeholder="Enter your phoneNo" required style="border-radius: 0.4rem; color:black;"/>
+    <button onclick="sendOTP()" style="border-radius: 0.4rem; background-color: #4e0eff; color:white;">Send OTP</button>
+<!--</div>-->
+
+<!--&lt;!&ndash; Button to send OTP &ndash;&gt;-->
+<!--<div>-->
+
+</div>
+
+<!-- OTP input -->
+<div>
+    <label for="otp" style="margin-left:50px" class="head">OTP :</label>
+    <input type="text" id="otp" placeholder="Enter OTP" maxlength="6" pattern="[0-9]{6}" required style="border-radius: 0.4rem;"/>
+    <button onclick="validateOTP()" style="border-radius: 0.4rem; background-color: #4e0eff; color:white;">Validate OTP</button>
+</div>
+
+<!-- Email input -->
+<div>
+    <label for="phone" class="head">Email ID :</label>
+    <input type="email" id="phone" placeholder="Enter your Email-ID" required style="border-radius: 0.4rem; color:black;"/>
+    <button onclick="sendOTP()" style="border-radius: 0.4rem; background-color: #4e0eff; color:white;">Send OTP</button>
+<!--</div>-->
+
+<!--&lt;!&ndash; Button to send OTP &ndash;&gt;-->
+<!--<div>-->
+
+</div>
+
+<!-- OTP input -->
+<div>
+    <label for="otp" style="margin-left:50px" class="head">OTP :</label>
+    <input type="text" id="otp" placeholder="Enter OTP" maxlength="6" pattern="[0-9]{6}" required style="border-radius: 0.4rem;"/>
+    <button onclick="validateOTP()" style="border-radius: 0.4rem; background-color: #4e0eff; color:white;">Validate OTP</button>
+</div>
+
+
+<!--&lt;!&ndash; Button to validate OTP &ndash;&gt;-->
+<!--<div>-->
+<!--   -->
+<!--</div>-->
+
+<!-- Display messages -->
+<div id="message" style="color:white ">
+    <!-- Display success or error messages here -->
+</div>
+</form>
+<!-- Add any necessary JavaScript scripts here -->
+<script>
+
+    async function sendOTP() {
+           const phone = document.getElementById('phone').value.trim();
+
+           if (!phone) {
+               alert('Please enter your phone');
+               return;
+           }
+
+           try {
+               const url = new URL('http://localhost:8080/auth/sendOtp');
+               url.searchParams.append('phone', phone);
+
+               const response = await fetch(url, {
+                   method: 'POST',
+               });
+
+               if (response.ok) {
+                   alert('OTP send successfully');
+
+                   console.log("Success");
+               } else {
+
+                   alert('Invalid credential');
+                   console.log("not Success");
+               }
+           } catch (error) {
+               alert('Error sending OTP');
+           }
+       }
+
+     async function validateOTP() {
+
+        const otp = document.getElementById('otp').value.trim();
+
+        if (!otp) {
+            alert('Please enter OTP');
+            return;
+        }
+
+        try {
+            const url = new URL('http://localhost:8080/auth/validate');
+            url.searchParams.append('otpCode', otp);
+
+            const response = await fetch(url, {
+                method: 'POST',
+            });
+
+            if (response.ok) {
+
+               const messageDiv = document.getElementById('message');
+                messageDiv.innerHTML += `<h2>OTP Verified</h2>`;
+
+
+            } else {
+                alert('Invalid OTP');
+            }
+        } catch (error) {
+            console.error('Error validating OTP:', error);
+            alert('Error validating OTP');
+        }
+    }
+
+
+</script>
+</body>
+</html>
