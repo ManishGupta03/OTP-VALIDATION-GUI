@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test Page</title>
+</head>
+<body>
+<h1>API Test Page</h1>
+
+<h2>Send OTP</h2>
+<div>
+    <label for="mobileNumber">Mobile Number:</label>
+    <input type="text" id="mobileNumber">
+    <button onclick="sendOTP()">Send OTP</button>
+</div>
+
+<h2>Validate OTP</h2>
+<div>
+    <label for="otp">OTP:</label>
+    <input type="text" id="otp">
+    <button onclick="validateOTP()">Validate OTP</button>
+</div>
+
+<h2>Get User Profile</h2>
+<div>
+    <label for="userId">User ID:</label>
+    <input type="text" id="userId">
+    <button onclick="getUserProfile()">Get Profile</button>
+    <p id="userProfile"></p>
+</div>
+
+<script>
+    function sendOTP() {
+        var mobileNumber = document.getElementById("mobileNumber").value;
+        fetch("http://localhost:8080/api/otp/send?recipientPhoneNoOrEmailId=8820587012", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+<!--            body: JSON.stringify({ "mobileNumber": mobileNumber })-->
+        })
+        .then(response => {
+            if (response.ok) {
+                alert("OTP sent successfully.");
+            } else {
+                alert("Failed to send OTP.");
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    }
+
+    function validateOTP() {
+        var otp = document.getElementById("otp").value;
+        fetch("/api/otp/validate", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ "otp": otp })
+        })
+        .then(response => {
+            if (response.ok) {
+                alert("OTP is valid.");
+            } else {
+                alert("Invalid OTP.");
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    }
+
+    function getUserProfile() {
+        var userId = document.getElementById("userId").value;
+        fetch("/api/users/" + userId)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("userProfile").textContent = JSON.stringify(data);
+        })
+        .catch(error => console.error("Error:", error));
+    }
+</script>
+</body>
+</html>
